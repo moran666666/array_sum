@@ -1,12 +1,12 @@
 fn sum_u32(a: &[u32]) -> Option<u32> {
     let mut sum: u32 = 0;
-    for val in a.iter(){
-        sum = sum + val;
-        if sum < std::u32::MAX {
-            continue;
-        } else {
-            return None;
-        }
+    for &val in a.iter(){
+        match sum.checked_add(val) {
+            Some(value) => {
+                sum = value;
+            }
+            None => return None,
+        };
     }
     Some(sum)
 }
